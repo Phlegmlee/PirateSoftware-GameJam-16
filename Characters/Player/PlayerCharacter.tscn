@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhqveft01vf0"]
+
+[ext_resource type="Script" path="res://Characters/Player/player_character.gd" id="1_66a3m"]
+[ext_resource type="PackedScene" uid="uid://bw6oupo0hytj4" path="res://Characters/Player/robot.tscn" id="1_galxl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m5fho"]
+radius = 0.834751
+height = 1.71117
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4aku"]
+radius = 1.32156
+height = 3.84768
+
+[node name="PlayerCharacter" type="CharacterBody3D"]
+script = ExtResource("1_66a3m")
+
+[node name="robot" parent="." instance=ExtResource("1_galxl")]
+
+[node name="Robot_Armature" parent="robot" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0)
+
+[node name="Skeleton3D" parent="robot/Robot_Armature" index="0"]
+bones/0/position = Vector3(-0.00107037, 0.0922935, -0.329138)
+bones/0/rotation = Quaternion(0.0299564, 0.00362184, -0.00203535, 0.999543)
+bones/2/position = Vector3(0.608027, 0.574915, 0.0421517)
+bones/2/rotation = Quaternion(0.988683, 0.109102, -0.100651, -0.0217488)
+bones/4/position = Vector3(0.0233775, 0.80075, 0.0579436)
+bones/4/rotation = Quaternion(0.954405, 0.284267, -0.0910895, -0.00255702)
+bones/6/position = Vector3(-0.00107033, -0.0868008, 0.79524)
+bones/6/rotation = Quaternion(0.83496, -0.164127, 0.361737, -0.380855)
+bones/8/position = Vector3(0.00964164, -0.00736826, -0.0138816)
+bones/8/rotation = Quaternion(0.91489, 0.286504, -0.107384, -0.263363)
+bones/10/position = Vector3(-0.608027, 0.574915, 0.0421517)
+bones/10/rotation = Quaternion(0.988683, -0.109102, 0.100651, -0.0217488)
+bones/12/position = Vector3(-0.0233775, 0.80075, 0.0579436)
+bones/12/rotation = Quaternion(0.954405, -0.284267, 0.0910895, -0.00255702)
+bones/14/position = Vector3(-0.00964164, -0.00736826, -0.0138816)
+bones/14/rotation = Quaternion(0.91489, -0.286504, 0.107384, -0.263363)
+
+[node name="Eye" parent="robot/Robot_Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, 9.60426e-10, 4.19095e-09, 1.16415e-09, -0.997564, 0.0697566, 2.79397e-09, -0.0697566, -0.997564, 3.49246e-10, 0.199433, -0.329136)
+
+[node name="Arm_R" parent="robot/Robot_Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, -4.47035e-08, -1.49012e-08, -5.44824e-08, 0.997564, -0.0697564, 2.98023e-08, 0.0697564, 0.997564, 0.609838, 0.608432, 0.0426564)
+
+[node name="Body_R" parent="robot/Robot_Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 1.71363e-07, 0, -3.25963e-08, 0.997564, -0.0697564, -7.45058e-08, 0.0697564, 0.997564, -8.40053e-07, 0.837356, 0.0585049)
+
+[node name="Butt" parent="robot/Robot_Armature/Skeleton3D" index="3"]
+transform = Transform3D(1, 8.9407e-08, 0, 5.96046e-08, -0.997564, 0.0697566, 0, -0.0697566, -0.997564, 0.00111111, -0.0585182, 0.836953)
+
+[node name="Leg_R" parent="robot/Robot_Armature/Skeleton3D" index="4"]
+transform = Transform3D(-1, -1.49012e-08, 2.08616e-07, 4.47035e-08, -0.997564, -0.0697563, 2.08616e-07, -0.0697563, 0.997564, 1.17663e-05, -0.837392, -0.0588343)
+
+[node name="Arm_L" parent="robot/Robot_Armature/Skeleton3D" index="5"]
+transform = Transform3D(-1, 5.96046e-08, -1.04308e-07, -4.14439e-08, 0.997564, 0.0697564, 8.9407e-08, 0.0697564, -0.997564, -0.609499, 0.608017, 0.0424724)
+
+[node name="Body_L" parent="robot/Robot_Armature/Skeleton3D" index="6"]
+transform = Transform3D(-1, -1.11759e-07, -8.9407e-08, 6.23986e-08, 0.997564, 0.0697564, 1.49012e-08, 0.0697564, -0.997564, 7.45058e-08, 0.837578, 0.0585692)
+
+[node name="Leg_L" parent="robot/Robot_Armature/Skeleton3D" index="7"]
+transform = Transform3D(-1.49012e-07, 1.19209e-07, 1, -0.0697563, -0.997564, 1.19209e-07, 0.997564, -0.0697564, 2.38419e-07, 7.26432e-08, -0.837704, -0.0585779)
+
+[node name="Ball Form Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_m5fho")
+disabled = true
+
+[node name="Turret Form Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_x4aku")
+
+[editable path="robot"]
