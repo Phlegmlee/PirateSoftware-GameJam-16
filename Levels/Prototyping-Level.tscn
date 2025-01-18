@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://de4qyqg016ots"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_35ud4"]
+size = Vector3(25, 0.003, 25)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yqfo3"]
+points = PackedVector3Array(-12.5, -0.0015, -12.5, -12.5, 0.0015, -12.5, 12.5, -0.0015, -12.5, -12.5, -0.0015, 12.5, -12.5, 0.0015, 12.5, 12.5, 0.0015, -12.5, 12.5, -0.0015, 12.5, 12.5, 0.0015, 12.5)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a08ea"]
+
+[sub_resource type="Sky" id="Sky_lnary"]
+sky_material = SubResource("ProceduralSkyMaterial_a08ea")
+
+[sub_resource type="Environment" id="Environment_goger"]
+background_mode = 2
+sky = SubResource("Sky_lnary")
+ambient_light_source = 3
+
+[node name="Prototyping-level" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_35ud4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_yqfo3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_goger")

@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://drac2q63lfos7"]
+[gd_scene load_steps=3 format=3 uid="uid://drac2q63lfos7"]
 
-[ext_resource type="PackedScene" uid="uid://dhqveft01vf0" path="res://Characters/Player/PlayerCharacter.tscn" id="1_f6grw"]
+[ext_resource type="PackedScene" uid="uid://de4qyqg016ots" path="res://Levels/Prototyping-Level.tscn" id="1_1kuk1"]
+[ext_resource type="PackedScene" uid="uid://dhqveft01vf0" path="res://Characters/Player/PlayerEntity.tscn" id="1_f6grw"]
 
 [node name="Main" type="Node3D"]
 
+[node name="Prototyping-level" parent="." instance=ExtResource("1_1kuk1")]
+
 [node name="PlayerCharacter" parent="." instance=ExtResource("1_f6grw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.36999, 0)
