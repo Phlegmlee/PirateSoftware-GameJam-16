@@ -1,7 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhqveft01vf0"]
+[gd_scene load_steps=19 format=3 uid="uid://dhqveft01vf0"]
 
 [ext_resource type="Script" path="res://Characters/Player/PlayerEntity.gd" id="1_66a3m"]
 [ext_resource type="PackedScene" uid="uid://bw6oupo0hytj4" path="res://Characters/Player/robot.tscn" id="1_galxl"]
+[ext_resource type="Script" path="res://Tools/StateMachine/StateMachine.gd" id="3_0h426"]
+[ext_resource type="Script" path="res://Characters/Player/MovementStates/idle.gd" id="4_0v1l7"]
+[ext_resource type="Script" path="res://Characters/Player/MovementStates/walk.gd" id="4_uk1ec"]
+[ext_resource type="Script" path="res://Characters/Player/MovementStates/falling.gd" id="6_x2aw3"]
+[ext_resource type="Script" path="res://Characters/Player/MovementStates/jumping.gd" id="7_onod4"]
+[ext_resource type="Script" path="res://Characters/Player/MovementStates/rolling.gd" id="8_l8fd8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m5fho"]
 radius = 0.834751
@@ -11,57 +17,52 @@ height = 1.71117
 radius = 1.32156
 height = 3.84768
 
-[node name="PlayerCharacter" type="CharacterBody3D"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aekar"]
+animation = &"Ball_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kp17d"]
+animation = &"Ball_Opening"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7xkis"]
+animation = &"Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_artu0"]
+animation = &"Open_to_Turret_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5ixkr"]
+animation = &"Rolling"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hu4vx"]
+animation = &"Turret_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_buf0m"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8ycyp"]
+states/Ball_Idle/node = SubResource("AnimationNodeAnimation_aekar")
+states/Ball_Idle/position = Vector2(332, 132)
+states/Ball_Opening/node = SubResource("AnimationNodeAnimation_kp17d")
+states/Ball_Opening/position = Vector2(383, 29)
+states/End/position = Vector2(969, 100)
+states/Jump/node = SubResource("AnimationNodeAnimation_7xkis")
+states/Jump/position = Vector2(441, 161)
+states/Open_to_Turret_Idle/node = SubResource("AnimationNodeAnimation_artu0")
+states/Open_to_Turret_Idle/position = Vector2(576, 29)
+states/Rolling/node = SubResource("AnimationNodeAnimation_5ixkr")
+states/Rolling/position = Vector2(441, 100)
+states/Turret_Idle/node = SubResource("AnimationNodeAnimation_hu4vx")
+states/Turret_Idle/position = Vector2(769, 29)
+states/Walk/node = SubResource("AnimationNodeAnimation_buf0m")
+states/Walk/position = Vector2(900, 29)
+graph_offset = Vector2(-118, -73)
+
+[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("player", "camera", "camera_pivot", "model", "anim_tree") groups=["Player"]]
 script = ExtResource("1_66a3m")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-
-[node name="robot" parent="." instance=ExtResource("1_galxl")]
-
-[node name="Robot_Armature" parent="robot" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0)
-
-[node name="Skeleton3D" parent="robot/Robot_Armature" index="0"]
-bones/0/position = Vector3(-0.00107037, 0.0922935, -0.329138)
-bones/0/rotation = Quaternion(0.0299564, 0.00362184, -0.00203535, 0.999543)
-bones/2/position = Vector3(0.608027, 0.574915, 0.0421517)
-bones/2/rotation = Quaternion(0.988683, 0.109102, -0.100651, -0.0217488)
-bones/4/position = Vector3(0.0233775, 0.80075, 0.0579436)
-bones/4/rotation = Quaternion(0.954405, 0.284267, -0.0910895, -0.00255702)
-bones/6/position = Vector3(-0.00107033, -0.0868008, 0.79524)
-bones/6/rotation = Quaternion(0.83496, -0.164127, 0.361737, -0.380855)
-bones/8/position = Vector3(0.00964164, -0.00736826, -0.0138816)
-bones/8/rotation = Quaternion(0.91489, 0.286504, -0.107384, -0.263363)
-bones/10/position = Vector3(-0.608027, 0.574915, 0.0421517)
-bones/10/rotation = Quaternion(0.988683, -0.109102, 0.100651, -0.0217488)
-bones/12/position = Vector3(-0.0233775, 0.80075, 0.0579436)
-bones/12/rotation = Quaternion(0.954405, -0.284267, 0.0910895, -0.00255702)
-bones/14/position = Vector3(-0.00964164, -0.00736826, -0.0138816)
-bones/14/rotation = Quaternion(0.91489, -0.286504, 0.107384, -0.263363)
-
-[node name="Eye" parent="robot/Robot_Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 3.31784e-09, 6.98492e-09, 3.43425e-09, -0.997564, 0.0697565, 6.0536e-09, -0.0697565, -0.997564, -4.77303e-09, 0.199433, -0.329136)
-
-[node name="Arm_R" parent="robot/Robot_Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, -6.87316e-07, 2.83122e-07, 5.94184e-07, 0.997564, -0.0697564, -2.23517e-07, 0.0697565, 0.997564, 0.609838, 0.608433, 0.0426564)
-
-[node name="Body_R" parent="robot/Robot_Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, -4.02331e-07, 0, 4.80562e-07, 0.997564, -0.0697565, -2.98023e-08, 0.0697565, 0.997564, -8.84756e-07, 0.837356, 0.0585049)
-
-[node name="Butt" parent="robot/Robot_Armature/Skeleton3D" index="3"]
-transform = Transform3D(1, -3.57628e-07, 4.76837e-07, -3.57628e-07, -0.997564, 0.0697564, 3.8743e-07, -0.0697564, -0.997564, 0.00111111, -0.0585182, 0.836953)
-
-[node name="Leg_R" parent="robot/Robot_Armature/Skeleton3D" index="4"]
-transform = Transform3D(-1, -7.7486e-07, 5.96046e-08, 7.59959e-07, -0.997564, -0.069757, 1.49012e-07, -0.0697571, 0.997564, 1.11684e-05, -0.837392, -0.0588349)
-
-[node name="Arm_L" parent="robot/Robot_Armature/Skeleton3D" index="5"]
-transform = Transform3D(-1, 7.02217e-07, 2.08616e-07, 6.07222e-07, 0.997564, 0.0697565, -1.63913e-07, 0.0697565, -0.997564, -0.609499, 0.608018, 0.0424724)
-
-[node name="Body_L" parent="robot/Robot_Armature/Skeleton3D" index="6"]
-transform = Transform3D(-1, 4.32134e-07, -8.9407e-08, 5.75557e-07, 0.997564, 0.0697565, 7.45058e-08, 0.0697565, -0.997564, 1.19209e-07, 0.837578, 0.0585692)
-
-[node name="Leg_L" parent="robot/Robot_Armature/Skeleton3D" index="7"]
-transform = Transform3D(-5.96046e-08, 8.79169e-07, 1, -0.069757, -0.997564, 8.64267e-07, 0.997564, -0.0697571, 2.08616e-07, 6.92904e-07, -0.837704, -0.0585785)
+player = NodePath(".")
+camera = NodePath("CameraPivot/Camera3D")
+camera_pivot = NodePath("CameraPivot")
+model = NodePath("robot")
+anim_tree = NodePath("robot/AnimationPlayer/AnimationTree")
 
 [node name="Ball Form Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_m5fho")
@@ -69,5 +70,69 @@ disabled = true
 
 [node name="Turret Form Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_x4aku")
+
+[node name="robot" parent="." instance=ExtResource("1_galxl")]
+
+[node name="Robot_Armature" parent="robot" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="robot/Robot_Armature" index="0"]
+bones/0/rotation = Quaternion(0.0299564, 0.00362184, -0.00203535, 0.999543)
+bones/2/rotation = Quaternion(0.988683, 0.109102, -0.100651, -0.0217488)
+bones/4/rotation = Quaternion(0.954405, 0.284267, -0.0910895, -0.00255703)
+bones/6/rotation = Quaternion(0.83496, -0.164127, 0.361737, -0.380855)
+bones/8/rotation = Quaternion(0.91489, 0.286504, -0.107384, -0.263363)
+bones/10/rotation = Quaternion(0.988683, -0.109102, 0.100651, -0.0217488)
+bones/12/rotation = Quaternion(0.954405, -0.284267, 0.0910895, -0.00255703)
+bones/14/rotation = Quaternion(0.91489, -0.286504, 0.107384, -0.263363)
+
+[node name="Eye" parent="robot/Robot_Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, 1.89902e-09, 3.25963e-09, 2.35741e-09, -0.997564, 0.0697566, 1.86265e-09, -0.0697566, -0.997564, 4.65661e-10, 0.199433, -0.329136)
+
+[node name="Arm_R" parent="robot/Robot_Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 1.67638e-08, -5.96046e-08, -1.16881e-07, 0.997564, -0.0697564, 7.45058e-08, 0.0697565, 0.997564, 0.609838, 0.608432, 0.0426564)
+
+[node name="Body_R" parent="robot/Robot_Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 2.01166e-07, -4.47035e-08, -1.24797e-07, 0.997564, -0.0697565, 1.49012e-08, 0.0697564, 0.997564, -8.28877e-07, 0.837356, 0.0585047)
+
+[node name="Leg_R" parent="robot/Robot_Armature/Skeleton3D" index="4"]
+transform = Transform3D(-1, 1.19209e-07, 2.98023e-08, -2.23517e-07, -0.997564, -0.0697563, 5.96046e-08, -0.0697564, 0.997564, 1.17905e-05, -0.837392, -0.0588343)
+
+[node name="Arm_L" parent="robot/Robot_Armature/Skeleton3D" index="5"]
+transform = Transform3D(-1, 1.76951e-08, -1.3411e-07, -8.84756e-08, 0.997564, 0.0697564, 1.3411e-07, 0.0697564, -0.997564, -0.609499, 0.608017, 0.0424724)
+
+[node name="Body_L" parent="robot/Robot_Armature/Skeleton3D" index="6"]
+transform = Transform3D(-1, -1.93715e-07, -1.49012e-07, -6.14673e-08, 0.997564, 0.0697565, 4.47035e-08, 0.0697564, -0.997564, 7.63685e-08, 0.837578, 0.0585691)
+
+[node name="Leg_L" parent="robot/Robot_Armature/Skeleton3D" index="7"]
+transform = Transform3D(2.68221e-07, 1.19209e-07, 1, -0.0697564, -0.997564, 1.63913e-07, 0.997564, -0.0697566, -2.08616e-07, 1.30385e-07, -0.837704, -0.058578)
+
+[node name="AnimationTree" type="AnimationTree" parent="robot/AnimationPlayer" index="0"]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_8ycyp")
+anim_player = NodePath("..")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2, 4)
+
+[node name="MovementStateMachine" type="Node" parent="."]
+script = ExtResource("3_0h426")
+
+[node name="Idle" type="Node" parent="MovementStateMachine"]
+script = ExtResource("4_0v1l7")
+
+[node name="Walking" type="Node" parent="MovementStateMachine"]
+script = ExtResource("4_uk1ec")
+
+[node name="Falling" type="Node" parent="MovementStateMachine"]
+script = ExtResource("6_x2aw3")
+
+[node name="Jumping" type="Node" parent="MovementStateMachine"]
+script = ExtResource("7_onod4")
+
+[node name="Rolling" type="Node" parent="MovementStateMachine"]
+script = ExtResource("8_l8fd8")
 
 [editable path="robot"]

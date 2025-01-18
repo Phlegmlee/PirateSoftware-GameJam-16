@@ -24,11 +24,6 @@ extends CharacterBody3D
 @export_group("Character Abilities")
 @export var ability_slot_one : String = "character_ability_slot_one"
 @export var ability_slot_two : String = "character_ability_slot_two"
-@export_group("Team Abilities")
-@export var team_ability : String = "team_ability"
-@export var team_ability_two : String = "team_ability_two"
-@export var team_ability_three : String = "team_ability_three"
-@export var team_ability_four : String = "team_ability_four"
 @export_group("Gunplay")
 @export var primary_shot : String = "primary_shoot"
 @export var secondary_shoot : String = "secondary_shoot"
